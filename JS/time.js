@@ -1,22 +1,22 @@
-// window.addEventListener("load", () => {
-//   setTimeout(() => {
-//     document.getElementById("loading").style.display = "block";
-//   }, 3000);
-// });
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loading").style.display = "block";
+  }, 3000);
+});
 
-// function countFun() {
-//   let count = 0;
-//   const countEle = document.getElementById("count");
+function countFun() {
+  let count = 0;
+  const countEle = document.getElementById("count");
 
-//   const countVld = setInterval(() => {
-//     count++;
-//     countEle.innerHTML = count;
-//     if (count === 5) {
-//       clearInterval(countVld);
-//     }
-//   }, 1000);
-// }
-// countFun();
+  const countVld = setInterval(() => {
+    count++;
+    countEle.innerHTML = count;
+    if (count === 5) {
+      clearInterval(countVld);
+    }
+  }, 1000);
+}
+countFun();
 
 const slide = [
   {
