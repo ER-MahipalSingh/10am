@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 const users = [
   { id: 1, name: "Jhon", age: 20 },
@@ -24,6 +24,19 @@ app.post("/add-user", (req, res) => {
 
   users.push(newUser);
   return res.status(200).json({ message: "User data added", newUser });
+});
+
+app.get("/user/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const user = users.find((userID) => userID.id === id);
+  return res.status(200).json({ message: "User data fetch", user });
+});
+
+app.patch("/update/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const user = users.find((userId) => userId.id === id);
+  user.name = req.body.name;
+  return res.status(201).json({ message: "User data updates", user });
 });
 
 app.listen(5000, () => {
