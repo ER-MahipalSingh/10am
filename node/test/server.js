@@ -39,6 +39,12 @@ app.patch("/update/:id", (req, res) => {
   return res.status(201).json({ message: "User data updates", user });
 });
 
+app.delete("/delete/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const user = users.filter((userID) => userID.id !== id);
+  return res.status(201).json({ message: "User deleted", user });
+});
+
 app.listen(5000, () => {
   console.log("Server is working...");
 });
