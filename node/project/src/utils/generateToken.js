@@ -6,7 +6,7 @@ exports.generateToken = (id, res) => {
     expiresIn: process.env.EXPERIE_DATE,
   });
   const options = {
-    expires: new Date(Date.now() + env.EXPERIE_DATE * 24 * 60 * 60 * 1000),
+    expires: new Date(Date.now() + env.JWT_EXPERIES * 24 * 60 * 60 * 1000),
     httpOnly: true,
     secure: false,
   };

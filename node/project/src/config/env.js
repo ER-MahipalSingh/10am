@@ -7,4 +7,6 @@ exports.env = {
   SECRET_KEY: process.env.SECRET_KEY,
 
   EXPERIE_DATE: process.env.EXPERIE_DATE,
+
+  JWT_EXPERIES: process.env.JWT_EXPERIES,
 };

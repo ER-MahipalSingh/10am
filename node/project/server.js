@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 
 const { env } = require("./src/config/env");
 const { connectDatabase } = require("./src/db/db");
@@ -8,6 +9,7 @@ const userRoutes = require("./src/routes/userRoutes");
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 connectDatabase();
 
