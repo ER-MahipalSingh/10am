@@ -11,6 +11,10 @@ exports.register = async (req, res) => {
       return res.status(401).json({ message: "All fields are required" });
     }
 
+    if (!req.file) {
+      return res.status(400).json({ message: "Avatar is required" });
+    }
+
     const extUser = await User.findOne({ email }).select("-password");
     if (extUser) {
       return res.status(401).json({ message: "User already registerd" });
@@ -22,6 +26,7 @@ exports.register = async (req, res) => {
       name,
       email,
       password: hasPass,
+      avatar: req.file.path,
     });
 
     return res.status(201).json({ message: "Registeration done", newUser });
@@ -131,4 +136,43 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-exports.verifyOTPAndResetPassword = async (req, res) => {};
+exports.verifyOTPAndResetPassword = async (req, res) => {
+  try {
+    const { email, otp, password, confiramPassword } = req.body;
+    if (!email || !otp || !password || !confiramPassword) {
+      return res.status(401).json({ message: "All fileds are required" });
+    }
+
+    const otpCheck = await OTP.findOne({ email });
+    if (!otpCheck) {
+      return res.status(404).json({ message: "OTP not found" });
+    }
+
+    if (otpCheck.otp !== otp) {
+      return res.status(401).json({ message: "Invalid OTP" });
+    }
+
+    if (otpCheck.date < Date.now()) {
+      return res.status(401).json({ message: "OTP has expired" });
+    }
+
+    if (password !== confiramPassword) {
+      return res.status(401).json({ message: "Password not matched" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const hassPass = await bcrypt.hash(password, 10);
+
+    user.password = hassPass;
+    user.save();
+
+    return res.status(201).json({ message: "Password reset successfully" });
+  } catch (error) {
+    console.error("Error: ", error);
+    return res.status(500).json({ message: "Semthing went wrong" });
+  }
+};

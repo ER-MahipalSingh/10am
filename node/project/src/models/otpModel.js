@@ -13,6 +13,7 @@ const otpSchema = new mongoose.Schema(
     date: {
       type: Date,
     },
+    
   },
   { timestamps: true },
 );
